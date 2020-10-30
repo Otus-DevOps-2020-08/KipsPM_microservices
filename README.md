@@ -32,7 +32,7 @@ docker build -f ./post-py/Dockerfile.2 -t kipspm/post:2.0 ./post-py
 docker build -f ./comment/Dockerfile.2 -t kipspm/comment:2.0 ./comment
 docker build -f ./ui/Dockerfile.3 -t kipspm/ui:3.0 ./ui
 
-Команды запуска (с подключенным докер вольюм):
+Команды запуска (с подключенным docker volume):
 docker volume create reddit_db
 docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db --volume reddit_db:/data/db mongo:latest
 docker run -d --network=reddit --network-alias=post kipspm/post:2.0
