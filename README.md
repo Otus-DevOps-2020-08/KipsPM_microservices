@@ -8,3 +8,33 @@ KipsPM microservices repository
 4. Переиспользованы и доработаны терраформ скрипты с прошлых занятий для поднятия инстанса stage под докер.
 5. Переиспользованы и доработаны ансибл плейбуки для провижионинга поднятого терраформом инстанса.
 6. Переиспользованы и доработаны пакер шаблоны и ансибл плейбуки для создания образа убунты с поднятым докером.
+
+#Homework 13
+1. Установлен hadolint в докер-контейнере.
+2. В процессе использования заготовленных докерфайлов пользовался линтером, но менял только ADD на COPY.
+Полноценно воспользовался линтером при выполнении задания со *.
+3. Изучил разные варианты запуска контейнеров:
+docker network create reddit
+docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db mongo:latest
+docker run -d --network=reddit --network-alias=post kipspm/post:1.0
+docker run -d --network=reddit --network-alias=comment kipspm/comment:1.0
+docker run -d --network=reddit -p 9292:9292 kipspm/ui:1.0
+
+Запуск с другими переменными (задание со *):
+docker run -d --network=reddit --network-alias=post_db_new --network-alias=comment_db_new mongo:latest
+docker run -d --network=reddit --network-alias=post_new --env POST_DATABASE_HOST=post_db_new kipspm/post:1.0
+docker run -d --network=reddit --network-alias=comment_new --env COMMENT_DATABASE_HOST=comment_db_new kipspm/comment:1.0
+docker run -d --network=reddit -p 9292:9292 --env POST_SERVICE_HOST=post_new --env COMMENT_SERVICE_HOST=comment_new kipspm/ui:1.0
+
+4. Изучил варианты написания Докерфайлов и способы их оптимизации.
+5. Для задания со звездочкой написал новые докерфайлы на alpine образах. Команды билд:
+docker build -f ./post-py/Dockerfile.2 -t kipspm/post:2.0 ./post-py
+docker build -f ./comment/Dockerfile.2 -t kipspm/comment:2.0 ./comment
+docker build -f ./ui/Dockerfile.3 -t kipspm/ui:3.0 ./ui
+
+Команды запуска (с подключенным docker volume):
+docker volume create reddit_db
+docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db --volume reddit_db:/data/db mongo:latest
+docker run -d --network=reddit --network-alias=post kipspm/post:2.0
+docker run -d --network=reddit --network-alias=comment kipspm/comment:2.0
+docker run -d --network=reddit -p 9292:9292 kipspm/ui:3.0
