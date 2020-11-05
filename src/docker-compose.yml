@@ -1,0 +1,50 @@
+version: '3.3'
+services:
+  post_db:
+    image: mongo:${MONGO_VERSION}
+    volumes:
+      - post_db:/data/db
+    networks:
+      back_net:
+        aliases:
+          - post_db
+          - comment_db
+  ui:
+    build: ./ui
+    image: ${USERNAME_DOCKERHUB}/ui:${UI_VERSION}
+    ports:
+      - ${UI_PUB_PORT}:9292/tcp
+    networks:
+      - front_net
+    depends_on:
+      - post
+      - comment
+  post:
+    build: ./post-py
+    image: ${USERNAME_DOCKERHUB}/post:${POST_VERSION}
+    networks:
+      - back_net
+      - front_net
+    depends_on:
+      - post_db
+  comment:
+    build: ./comment
+    image: ${USERNAME_DOCKERHUB}/comment:${COMMENT_VERSION}
+    networks:
+      - back_net
+      - front_net
+    depends_on:
+      - post_db
+
+volumes:
+  post_db:
+
+networks:
+  back_net:
+    ipam:
+      config:
+        - subnet: ${BACK_SUBNET}
+  front_net:
+    ipam:
+      config:
+        - subnet: ${FRONT_SUBNET}
