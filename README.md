@@ -38,3 +38,12 @@ docker run -d --network=reddit --network-alias=post_db --network-alias=comment_d
 docker run -d --network=reddit --network-alias=post kipspm/post:2.0
 docker run -d --network=reddit --network-alias=comment kipspm/comment:2.0
 docker run -d --network=reddit -p 9292:9292 kipspm/ui:3.0
+
+#Homework 14
+1. Попробованы разные варианты сетевых драйверов: none, host, bridge
+2. Проект был запущен в двух разных сетях.
+3. Установлен докер компоуз.
+4. Описана инфраструктура в компоуз файле docker-compose.yml
+5. Для параметризации компоуза был использован файл .env
+6. Для задания базового имени проекта в энвы была прописана переменная COMPOSE_PROJECT_NAME
+7. Добавлен файл docker-compose.override.yml с данными volume и командами для запуска пумы для руби приложений в дебаг режиме с двумя воркерами.
