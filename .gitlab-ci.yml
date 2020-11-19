@@ -8,9 +8,10 @@ stages:
 
 build_job:
   stage: build
-  image: docker:19.03.8
+  image: "docker:stable"
+  privileged: true
   services:
-    - docker:19.03.8-dind
+    - docker:dind
   before_script:
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
