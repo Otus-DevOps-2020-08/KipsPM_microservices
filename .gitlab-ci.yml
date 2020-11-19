@@ -65,7 +65,7 @@ branch review:
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
     - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install pyrsistent=0.15.7
+    - pip install pyrsistent==0.15.7
     - pip install docker-compose
     - sleep 20
     - docker-compose --version
