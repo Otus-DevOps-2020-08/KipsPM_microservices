@@ -55,6 +55,7 @@ deploy_job:
 branch review:
   stage: review
   image: docker:19.03.8
+  alias: docker
   before_script:
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
