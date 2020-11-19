@@ -63,10 +63,12 @@ branch review:
   before_script:
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
-    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-    - pip install docker-compose
+    - apk add curl py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    - sudo chmod +x /usr/local/bin/docker-compose
+  script:
+    - echo "Deploy to $CI_ENVIRONMENT_SLUG"
     - docker-compose -f ./reddit/docker-compose.yml config
-  script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
