@@ -28,7 +28,7 @@ test_unit_job:
   services:
     - mongo:latest
   variables:
-    DATABASE_URL: 'mongodb://mongo/user_posts'
+    DATABASE_URL: 'mongo:27017'
   before_script:
     - cd reddit
     - bundle install
