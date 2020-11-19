@@ -49,3 +49,4 @@ docker run -d --network=reddit -p 9292:9292 kipspm/ui:3.0
 7. Добавлен файл docker-compose.override.yml с данными volume и командами для запуска пумы для руби приложений в дебаг режиме с двумя воркерами.
 
 #Homework 15
+1.
