@@ -12,7 +12,8 @@ build_job:
   variables:
     DOCKER_TLS_CERTDIR: ''
   services:
-    - docker:19.03.8-dind
+    - name: docker:19.03.8-dind
+      alias: docker
   before_script:
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
