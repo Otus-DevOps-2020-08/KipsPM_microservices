@@ -8,9 +8,9 @@ stages:
 
 build_job:
   stage: build
-  image: docker:latest
+  image: docker:19.03.8
   services:
-    - name: docker:dind
+    - docker:19.03.8-dind
   before_script:
     - docker info
     - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
