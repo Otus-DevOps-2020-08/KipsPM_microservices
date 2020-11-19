@@ -54,6 +54,13 @@ deploy_job:
 
 branch review:
   stage: review
+  image: docker:19.03.8
+  before_script:
+    - docker info
+    - docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_PASSWORD
+    - apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
+    - docker-compose -f ./reddit/docker-compose.yml config
   script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
   environment:
     name: branch/$CI_COMMIT_REF_NAME
