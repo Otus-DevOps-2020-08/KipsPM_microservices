@@ -55,3 +55,18 @@ docker run -d --network=reddit -p 9292:9292 kipspm/ui:3.0
 4. На этап review добавлен деплой reddit на хост.
 5. Добавлен скрипт для запуска раннера.
 6. Интегрирован вебхук для оповещений в слак. https://devops-team-otus.slack.com/archives/C01ABLPUF99
+
+#Homework 16
+1. Установлен и запущен Prometheus на docker-host в YC с помощью docker-machine
+2. Настроен мониторинг микросервисов с помощью Prometheus.
+3. Настроен node-exporter для мониторинга хоста.
+4. Настроен mongodb_exporter (percona) для мониторинга MongoDB.
+5. Настроен blackbox_exporter для мониторинга микросервисов.
+6. Написан Makefile который билдит микросервисы reddit c помощью скриптов, а mongodb_exporter и Prometheus c помощью docker build. Команда запуска make build_all
+7. Также Makefile поднимает все сервисы командой make start_all и пушит в докерхаб командой make push_all
+8. Ссылки на образы:
+https://hub.docker.com/repository/docker/kipspm/prometheus
+https://hub.docker.com/repository/docker/kipspm/mongodb_exporter
+https://hub.docker.com/repository/docker/kipspm/ui
+https://hub.docker.com/repository/docker/kipspm/post
+https://hub.docker.com/repository/docker/kipspm/comment
