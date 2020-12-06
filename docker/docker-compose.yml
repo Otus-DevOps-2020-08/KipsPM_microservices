@@ -1,54 +1,5 @@
 version: '3.3'
 services:
-  prometheus:
-    image: ${USERNAME_DOCKERHUB}/prometheus
-    ports:
-      - '9090:9090'
-    volumes:
-      - prometheus_data:/prometheus
-    command: # Передаем доп параметры в командной строке
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention=1d' # Задаем время хранения метрик в 1 день
-    volumes:
-      - prometheus_data:/prometheus
-    networks:
-      - front_net
-
-  node-exporter:
-    image: prom/node-exporter:${NODE_EXPORTER_VERSION:-v0.15.2}
-    user: root
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-    networks:
-      - front_net
-
-  mongodb_exporter:
-    image: ${USERNAME_DOCKERHUB}/mongodb_exporter
-    command:
-      - '--collect.database'
-      - '--collect.collection'
-      - '--collect.topmetrics'
-      - '--collect.indexusage'
-      - '--collect.connpoolstats'
-      - '--mongodb.uri=mongodb://mongo_db:27017'
-    networks:
-      - back_net
-      - front_net
-    depends_on:
-      - post_db
-
-  blackbox-exporter:
-    image: prom/blackbox-exporter:${BLACKBOX_EXPORTER_VERSION:-v0.18.0}
-    networks:
-      - front_net
-
   post_db:
     image: mongo:${MONGO_VERSION}
     volumes:
@@ -59,23 +10,40 @@ services:
           - post_db
           - comment_db
   ui:
-    image: ${USERNAME_DOCKERHUB}/ui
+    image: ${USERNAME_DOCKERHUB}/ui:logging
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     ports:
       - ${UI_PUB_PORT}:9292/tcp
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.ui
+
     networks:
       - front_net
     depends_on:
       - post
       - comment
   post:
-    image: ${USERNAME_DOCKERHUB}/post
+    image: ${USERNAME_DOCKERHUB}/post:logging
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
       - back_net
       - front_net
     depends_on:
       - post_db
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.post
   comment:
-    image: ${USERNAME_DOCKERHUB}/comment
+    image: ${USERNAME_DOCKERHUB}/comment:logging
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
       - back_net
       - front_net
@@ -84,7 +52,6 @@ services:
 
 volumes:
   post_db:
-  prometheus_data:
 
 networks:
   back_net:
