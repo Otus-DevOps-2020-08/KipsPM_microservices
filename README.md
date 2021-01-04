@@ -95,6 +95,7 @@ https://hub.docker.com/repository/docker/kipspm/comment
 6. Развернут dashboard k8s с помощью https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
 Travis?
 traviiiiis
+traaaaaavis
 
 
 
