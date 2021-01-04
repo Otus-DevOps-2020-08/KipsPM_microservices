@@ -87,7 +87,7 @@ https://hub.docker.com/repository/docker/kipspm/comment
 3. Порядок запуска плейбуков initial.yml, kube-dependencies.yml, master.yml, workers.yml
 
 #Homework 19
-1. Запущен локальный minikube с драйвером virtualbox
+1. Запущен локальный minikube с драйвером VirtualBox
 2. Написаны манифесты для деплоя компонентов приложения в кубер
 3. Приложение проверено и работает в minikube
 4. Развернут кластер кубернетис в Яндекс.Клауд вручную.
