@@ -86,3 +86,12 @@ https://hub.docker.com/repository/docker/kipspm/comment
 2. Процесс развертывания описан в ансибл плейбуках
 3. Порядок запуска плейбуков initial.yml, kube-dependencies.yml, master.yml, workers.yml
 
+#Homework 19
+1. Запущен локальный minikube с драйвером virtualbox
+2. Написаны манифесты для деплоя компонентов приложения в кубер
+3. Приложение проверено и работает в minikube
+4. Развернут кластер кубернетис в Яндекс.Клауд вручную.
+5. Развернут кластер кубернетис в Яндекс.Клауд с помощью terraform (для задания со звездочкой)
+6. Развернут dashboard k8s с помощью https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
+
