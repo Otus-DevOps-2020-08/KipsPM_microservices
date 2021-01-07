@@ -1,3 +1,8 @@
+provider "yandex" {
+  service_account_key_file = var.service_account_key_file
+  folder_id                = var.folder_id
+}
+
 resource "yandex_kms_symmetric_key" "key-a" {
   name              = "symetric-key"
   description       = "description for key"
