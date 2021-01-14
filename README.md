@@ -95,5 +95,11 @@ https://hub.docker.com/repository/docker/kipspm/comment
 6. Развернут dashboard k8s с помощью https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
 7. Трэвис мертвый.
 
+#Homework 20
+1. Настроен loadbalancer.
+2. Настроен Ingress.
+3. Настроен Secret TLS (написан манифест для задания со звездочкой).
+4. Настроен NetworkPolicy.
+5. Настроен PersistentVolume, PersistentClaim
 
 
